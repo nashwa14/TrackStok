@@ -1,0 +1,186 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  section .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+  
+  .card-header {
+    position: relative;
+    padding: 60px;
+    background: rgba(248, 244, 247, 0.868);
+    border: 1px solid #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    z-index: 5; 
+  }
+  
+  
+  .login {
+    position: relative;
+    padding: 60px;
+    background: rgba(248, 244, 247, 0.868);
+    border: 1px solid #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+    z-index: 5; 
+  }
+  
+  .login .logo {
+    width: 100px; 
+    height: auto; 
+    margin: auto; /* Memusatkan logo */
+    display: block; 
+    position: absolute; 
+    top: 0px; 
+    left: 10px; 
+  }
+  
+  
+  
+  .login h2 {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #FF3E41;
+    margin-bottom: 5px;
+  }
+  
+  .login .inputBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .login .inputBox input {
+    flex: 1; /* Input akan mengisi ruang tersisa */
+    padding: 15px 20px;
+    padding-left: 30px; /* Berikan ruang untuk ikon */
+    font-size: 1.25em;
+    color: #FF3E41;
+    border-radius: 5px;
+    background: #fff;
+    border: none;
+    outline: none;
+  }
+  
+  .login .inputBox i {
+    position: absolute;
+    left: 10px; /* Atur jarak dari kiri kotak teks */
+    top: 50%; /* Atur jarak dari atas kotak teks */
+    transform: translateY(-50%); /* Pusatkan ikon secara vertikal */
+    color: #FF3E41; /* Warna ikon */
+    font-size: 1em; /* Atur ukuran ikon */
+  }
+  
+  
+  
+  .login .inputBox ::placeholder {
+    color: #FF3E41;
+  }
+  
+  .login .inputBox #btn {
+    position: relative;
+    border: none;
+    outline: none;
+    background: #FF3E41;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.25em;
+    font-weight: 500;
+    transition: 0.5s;
+  }
+  
+  .login .inputBox #btn:hover {
+    background: #e37c75;
+  }
+  
+  .login .group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .login .group a {
+    font-size: 1.25em;
+    color: #FF3E41;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  
+  .login .group a:nth-child(2) {
+    text-decoration: underline;
+  }
+  
+  
+  .fas.fa-home {
+    position: absolute;
+    top: 10px; 
+    right: 20px; 
+    z-index: 100;
+    display: flex;
+    color: #FF3E41;
+    font-size: 20px;
+  }
+  
+  .fas.fa-home:hover {
+    color: #ea6a82;
+  }
+  
+  a {
+    color: inherit; /* Warna link mengikuti warna elemen parent */
+    text-decoration: none; /* Menghapus garis bawah dari link */
+  }
+  
+  /* Jika Anda ingin mengatur warna teks secara spesifik */
+  a .text {
+    color: #FF3E41; /* Warna teks link */
+  }
+
+  .card-header {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+button {
+    border-radius: 5px;
+}
+
+textarea,
+input {
+    border-radius: 5px;
+}

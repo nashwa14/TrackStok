@@ -1,0 +1,1377 @@
+.gudang-manajemen {
+  background-color: #efeeed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.gudang-manajemen .div {
+  background-color: #efeeed;
+  overflow: hidden;
+  width: 1440px;
+  height: 1024px;
+  position: relative;
+}
+
+.gudang-manajemen .overlap {
+  position: absolute;
+  width: 1178px;
+  height: 1026px;
+  top: -2px;
+  left: 265px;
+}
+
+.gudang-manajemen .overlap-group {
+  position: absolute;
+  width: 1178px;
+  height: 1026px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group {
+  position: absolute;
+  width: 1178px;
+  height: 158px;
+  top: 2px;
+  left: 0;
+}
+
+.gudang-manajemen .overlap-group-wrapper {
+  height: 158px;
+}
+
+.gudang-manajemen .overlap-group-2 {
+  position: relative;
+  width: 1176px;
+  height: 158px;
+  background-color: #ffffff;
+}
+
+.gudang-manajemen .vector {
+  position: absolute;
+  width: 1175px;
+  height: 1px;
+  top: 86px;
+  left: 0;
+}
+
+.gudang-manajemen .div-wrapper {
+  position: absolute;
+  width: 364px;
+  height: 24px;
+  top: 105px;
+  left: 17px;
+}
+
+.gudang-manajemen .text-wrapper {
+  position: absolute;
+  width: 362px;
+  top: 0;
+  left: 0;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #000000;
+  font-size: 20px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.gudang-manajemen .notification {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 28px;
+  left: 894px;
+}
+
+.gudang-manajemen .overlap-2 {
+  position: relative;
+  width: 22px;
+  height: 26px;
+  top: 2px;
+  left: 4px;
+}
+
+.gudang-manajemen .iconly-bold {
+  position: absolute;
+  width: 21px;
+  height: 25px;
+  top: 1px;
+  left: 0;
+  background-image: url(./img/notification.png);
+  background-size: 100% 100%;
+}
+
+.gudang-manajemen .ellipse {
+  width: 8px;
+  height: 8px;
+  left: 14px;
+  background-color: #ff0000;
+  border-radius: 4px;
+  position: absolute;
+  top: 0;
+}
+
+.gudang-manajemen .group-2 {
+  position: absolute;
+  width: 144px;
+  height: 40px;
+  top: 23px;
+  left: 956px;
+}
+
+.gudang-manajemen .img {
+  width: 40px;
+  height: 40px;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+}
+
+.gudang-manajemen .text-wrapper-2 {
+  position: absolute;
+  top: 10px;
+  left: 52px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.gudang-manajemen .bx-bx-chevron-down-wrapper {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 8px;
+  left: 118px;
+  background-image: url(./img/bx-bx-chevron-down.svg);
+  background-size: 100% 100%;
+}
+
+.gudang-manajemen .bx-bx-chevron-down {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-wrapper {
+  position: absolute;
+  width: 1px;
+  height: 1026px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-3 {
+  position: absolute;
+  width: 1px;
+  height: 1024px;
+  top: 2px;
+  left: -1px;
+}
+
+.gudang-manajemen .overlap-3 {
+  position: absolute;
+  width: 1099px;
+  height: 801px;
+  top: 194px;
+  left: 31px;
+}
+
+.gudang-manajemen .overlap-wrapper {
+  position: absolute;
+  width: 1099px;
+  height: 801px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .overlap-4 {
+  position: relative;
+  width: 1097px;
+  height: 801px;
+  background-color: #ffffff;
+  border-radius: 16.01px;
+}
+
+.gudang-manajemen .p {
+  position: absolute;
+  top: 756px;
+  left: 28px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #b5b7c0;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  line-height: normal;
+}
+
+.gudang-manajemen .rectangle {
+  position: absolute;
+  width: 1097px;
+  height: 35px;
+  top: 50px;
+  left: 0;
+  background-color: #f3f3f3;
+}
+
+.gudang-manajemen .frame-wrapper {
+  position: absolute;
+  width: 180px;
+  height: 24px;
+  top: 55px;
+  left: 28px;
+}
+
+.gudang-manajemen .frame {
+  display: flex;
+  width: 180px;
+  align-items: center;
+  gap: 533.37px;
+  position: relative;
+}
+
+.gudang-manajemen .text-wrapper-3 {
+  position: relative;
+  width: 207px;
+  margin-top: -1.00px;
+  margin-right: -27.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0.16px;
+  line-height: normal;
+}
+
+.gudang-manajemen .frame-2 {
+  display: flex;
+  width: 180px;
+  align-items: center;
+  gap: 533.37px;
+  position: absolute;
+  top: 55px;
+  left: 692px;
+}
+
+.gudang-manajemen .text-wrapper-4 {
+  position: relative;
+  width: 207px;
+  margin-top: -1.00px;
+  margin-right: -27.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0.16px;
+  line-height: normal;
+}
+
+.gudang-manajemen .text-wrapper-5 {
+  position: relative;
+  width: 207px;
+  margin-top: -1.00px;
+  margin-right: -767.37px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0.16px;
+  line-height: normal;
+}
+
+.gudang-manajemen .frame-3 {
+  display: flex;
+  width: 180px;
+  align-items: center;
+  gap: 533.37px;
+  position: absolute;
+  top: 55px;
+  left: 900px;
+}
+
+.gudang-manajemen .group-4 {
+  position: absolute;
+  width: 8px;
+  height: 18px;
+  top: 111px;
+  left: 644px;
+}
+
+.gudang-manajemen .frame-4 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 533.37px;
+}
+
+.gudang-manajemen .text-wrapper-6 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #393737;
+  font-size: 12px;
+  letter-spacing: 0.12px;
+  line-height: normal;
+}
+
+.gudang-manajemen .group-5 {
+  position: absolute;
+  width: 56px;
+  height: 18px;
+  top: 116px;
+  left: 33px;
+}
+
+.gudang-manajemen .brg-wrapper {
+  position: absolute;
+  top: 311px;
+  left: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 533.37px;
+}
+
+.gudang-manajemen .line {
+  top: 726px;
+  left: 28px;
+  position: absolute;
+  width: 1025px;
+  height: 5px;
+  object-fit: cover;
+}
+
+.gudang-manajemen .vector-2 {
+  position: absolute;
+  width: 11px;
+  height: 7px;
+  top: 21px;
+  left: 838px;
+}
+
+.gudang-manajemen .group-6 {
+  position: absolute;
+  width: 1054px;
+  height: 771px;
+  top: 10px;
+  left: 28px;
+}
+
+.gudang-manajemen .text-wrapper-7 {
+  position: absolute;
+  width: 226px;
+  top: 5px;
+  left: 0;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .overlap-5 {
+  position: absolute;
+  width: 1052px;
+  height: 653px;
+  top: 45px;
+  left: 0;
+}
+
+.gudang-manajemen .frame-5 {
+  display: flex;
+  width: 180px;
+  align-items: center;
+  gap: 533.37px;
+  position: absolute;
+  top: 0;
+  left: 613px;
+}
+
+.gudang-manajemen .text-wrapper-8 {
+  position: relative;
+  width: 64px;
+  margin-top: -1.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0.16px;
+  line-height: normal;
+}
+
+.gudang-manajemen .text-wrapper-9 {
+  margin-right: -624.37px;
+  position: relative;
+  width: 207px;
+  margin-top: -1.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0.16px;
+  line-height: normal;
+}
+
+.gudang-manajemen .group-7 {
+  position: absolute;
+  width: 15px;
+  height: 18px;
+  top: 256px;
+  left: 614px;
+}
+
+.gudang-manajemen .group-8 {
+  position: absolute;
+  width: 180px;
+  height: 34px;
+  top: 49px;
+  left: 872px;
+}
+
+.gudang-manajemen .overlap-group-3 {
+  position: relative;
+  height: 34px;
+}
+
+.gudang-manajemen .rectangle-2 {
+  position: absolute;
+  width: 111px;
+  height: 34px;
+  top: 0;
+  left: 48px;
+  background-color: #a40f0f;
+  border-radius: 5px;
+}
+
+.gudang-manajemen .frame-6 {
+  display: flex;
+  width: 180px;
+  align-items: center;
+  gap: 533.37px;
+  position: absolute;
+  top: 5px;
+  left: 0;
+}
+
+.gudang-manajemen .text-wrapper-10 {
+  position: relative;
+  width: 207px;
+  margin-right: -27.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0.12px;
+  line-height: normal;
+}
+
+.gudang-manajemen .group-9 {
+  position: absolute;
+  width: 180px;
+  height: 34px;
+  top: 248px;
+  left: 872px;
+}
+
+.gudang-manajemen .line-2 {
+  top: 228px;
+  left: 6px;
+  position: absolute;
+  width: 1025px;
+  height: 5px;
+  object-fit: cover;
+}
+
+.gudang-manajemen .line-3 {
+  top: 449px;
+  left: 0;
+  position: absolute;
+  width: 1025px;
+  height: 5px;
+  object-fit: cover;
+}
+
+.gudang-manajemen .group-10 {
+  position: absolute;
+  width: 1026px;
+  height: 653px;
+  top: 0;
+  left: 5px;
+}
+
+.gudang-manajemen .overlap-6 {
+  position: absolute;
+  width: 628px;
+  height: 653px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-11 {
+  position: absolute;
+  width: 628px;
+  height: 495px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-12 {
+  position: absolute;
+  width: 20px;
+  height: 18px;
+  top: 477px;
+  left: 608px;
+}
+
+.gudang-manajemen .group-13 {
+  position: absolute;
+  width: 181px;
+  height: 495px;
+  top: 0;
+  left: 414px;
+}
+
+.gudang-manajemen .group-14 {
+  position: absolute;
+  width: 180px;
+  height: 24px;
+  top: 0;
+  left: 1px;
+}
+
+.gudang-manajemen .group-15 {
+  position: absolute;
+  width: 73px;
+  height: 18px;
+  top: 61px;
+  left: 3px;
+}
+
+.gudang-manajemen .group-16 {
+  position: absolute;
+  width: 72px;
+  height: 18px;
+  top: 256px;
+  left: 3px;
+}
+
+.gudang-manajemen .group-17 {
+  position: absolute;
+  width: 70px;
+  height: 18px;
+  top: 477px;
+  left: 0;
+}
+
+.gudang-manajemen .group-18 {
+  position: absolute;
+  width: 59px;
+  height: 18px;
+  top: 477px;
+  left: 0;
+}
+
+.gudang-manajemen .group-19 {
+  position: absolute;
+  width: 180px;
+  height: 653px;
+  top: 0;
+  left: 141px;
+}
+
+.gudang-manajemen .group-20 {
+  position: absolute;
+  width: 180px;
+  height: 24px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-21 {
+  position: absolute;
+  width: 103px;
+  height: 18px;
+  top: 61px;
+  left: 50px;
+}
+
+.gudang-manajemen .group-22 {
+  position: absolute;
+  width: 66px;
+  height: 18px;
+  top: 257px;
+  left: 50px;
+}
+
+.gudang-manajemen .image {
+  width: 107px;
+  height: 152px;
+  top: 286px;
+  left: 50px;
+  position: absolute;
+  object-fit: cover;
+}
+
+.gudang-manajemen .image-2 {
+  width: 89px;
+  height: 127px;
+  top: 89px;
+  left: 57px;
+  position: absolute;
+  object-fit: cover;
+}
+
+.gudang-manajemen .KING-ALLIGATOR-MTX-wrapper {
+  position: absolute;
+  top: 477px;
+  left: 47px;
+  display: inline-flex;
+  align-items: center;
+  gap: 533.37px;
+}
+
+.gudang-manajemen .image-3 {
+  width: 104px;
+  height: 149px;
+  top: 504px;
+  left: 55px;
+  position: absolute;
+  object-fit: cover;
+}
+
+.gudang-manajemen .group-23 {
+  position: absolute;
+  width: 111px;
+  height: 34px;
+  top: 472px;
+  left: 915px;
+}
+
+.gudang-manajemen .group-24 {
+  height: 34px;
+  background-color: #a40f0f;
+  border-radius: 5px;
+}
+
+.gudang-manajemen .group-25 {
+  position: relative;
+  width: 89px;
+  height: 24px;
+  top: 5px;
+  left: 11px;
+}
+
+.gudang-manajemen .frame-7 {
+  display: flex;
+  width: 89px;
+  align-items: center;
+  gap: 533.37px;
+  position: relative;
+}
+
+.gudang-manajemen .text-wrapper-11 {
+  position: relative;
+  width: 89px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0.12px;
+  line-height: normal;
+}
+
+.gudang-manajemen .text-wrapper-12 {
+  margin-right: -740.37px;
+  position: relative;
+  width: 207px;
+  margin-top: -1.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #000000;
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 0.16px;
+  line-height: normal;
+}
+
+.gudang-manajemen .status-dropdown {
+  position: absolute;
+  width: 131px;
+  height: 36px;
+  top: -11363px;
+  left: -4566px;
+}
+
+.gudang-manajemen .status-dropdown-2 {
+  top: -11160px;
+  position: absolute;
+  width: 98px;
+  height: 36px;
+  left: -4566px;
+}
+
+.gudang-manajemen .status-dropdown-3 {
+  top: -10942px;
+  position: absolute;
+  width: 98px;
+  height: 36px;
+  left: -4566px;
+}
+
+.gudang-manajemen .group-26 {
+  position: absolute;
+  width: 273px;
+  height: 24px;
+  top: 747px;
+  left: 760px;
+}
+
+.gudang-manajemen .frame-8 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 10px;
+  position: absolute;
+  top: 0;
+  left: 38px;
+  background-color: #439ac2;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.gudang-manajemen .text-wrapper-13 {
+  color: #ffffff;
+  letter-spacing: -0.12px;
+  line-height: 12px;
+  white-space: nowrap;
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.gudang-manajemen .frame-9 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 9px;
+  position: absolute;
+  top: 0;
+  left: 75px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #eeeeee;
+}
+
+.gudang-manajemen .text-wrapper-14 {
+  color: #404b52;
+  letter-spacing: -0.12px;
+  line-height: 12px;
+  white-space: nowrap;
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.gudang-manajemen .frame-10 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 9px;
+  position: absolute;
+  top: 0;
+  left: 148px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #eeeeee;
+}
+
+.gudang-manajemen .frame-11 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 5px;
+  position: absolute;
+  top: 0;
+  left: 207px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #eeeeee;
+}
+
+.gudang-manajemen .frame-12 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 9px;
+  position: absolute;
+  top: 0;
+  left: 245px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #eeeeee;
+}
+
+.gudang-manajemen .frame-13 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 9px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #eeeeee;
+}
+
+.gudang-manajemen .text-wrapper-15 {
+  position: absolute;
+  top: 8px;
+  left: 186px;
+  color: #000000;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: -0.12px;
+  line-height: 12px;
+  white-space: nowrap;
+}
+
+.gudang-manajemen .frame-14 {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 8px;
+  position: absolute;
+  top: 0;
+  left: 112px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid;
+  border-color: #eeeeee;
+}
+
+.gudang-manajemen .group-27 {
+  position: absolute;
+  width: 239px;
+  height: 29px;
+  top: 0;
+  left: 545px;
+}
+
+.gudang-manajemen .overlap-7 {
+  position: relative;
+  width: 237px;
+  height: 29px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid;
+  border-color: #d5d5d5;
+  box-shadow: 0px 1px 4px #00000040;
+}
+
+.gudang-manajemen .vector-3 {
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  top: 6px;
+  left: 12px;
+}
+
+.gudang-manajemen .text-wrapper-16 {
+  position: absolute;
+  width: 75px;
+  height: 19px;
+  top: 5px;
+  left: 24px;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #979797;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .overlap-8 {
+  position: absolute;
+  width: 80px;
+  height: 29px;
+  top: 0;
+  left: 967px;
+}
+
+.gudang-manajemen .group-28 {
+  position: absolute;
+  width: 80px;
+  height: 29px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-29 {
+  height: 29px;
+}
+
+.gudang-manajemen .group-30 {
+  width: 80px;
+  height: 29px;
+}
+
+.gudang-manajemen .group-31 {
+  width: 82px;
+  height: 29px;
+}
+
+.gudang-manajemen .overlap-group-4 {
+  position: relative;
+  width: 80px;
+  height: 29px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid;
+  border-color: #d5d5d5;
+  box-shadow: 0px 1px 4px #00000040;
+}
+
+.gudang-manajemen .text-wrapper-17 {
+  position: absolute;
+  width: 41px;
+  height: 19px;
+  top: 4px;
+  left: 28px;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #979797;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .group-32 {
+  position: absolute;
+  width: 16px;
+  height: 10px;
+  top: 10px;
+  left: 12px;
+}
+
+.gudang-manajemen .overlap-9 {
+  position: absolute;
+  width: 157px;
+  height: 29px;
+  top: 0;
+  left: 794px;
+}
+
+.gudang-manajemen .group-33 {
+  position: absolute;
+  width: 157px;
+  height: 29px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .group-34 {
+  width: 157px;
+  height: 29px;
+}
+
+.gudang-manajemen .group-35 {
+  width: 159px;
+  height: 29px;
+}
+
+.gudang-manajemen .overlap-group-5 {
+  position: relative;
+  width: 157px;
+  height: 29px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid;
+  border-color: #d5d5d5;
+  box-shadow: 0px 1px 4px #00000040;
+}
+
+.gudang-manajemen .text-wrapper-18 {
+  position: absolute;
+  width: 108px;
+  height: 19px;
+  top: 4px;
+  left: 33px;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #979797;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .vector-4 {
+  position: absolute;
+  width: 11px;
+  height: 7px;
+  top: 11px;
+  left: 12px;
+}
+
+.gudang-manajemen .group-36 {
+  position: absolute;
+  width: 265px;
+  height: 1025px;
+  top: -1px;
+  left: 0;
+  background-color: #a40f0f;
+}
+
+.gudang-manajemen .group-37 {
+  position: absolute;
+  width: 212px;
+  height: 77px;
+  top: 906px;
+  left: 32px;
+}
+
+.gudang-manajemen .group-38 {
+  position: absolute;
+  width: 110px;
+  height: 51px;
+  top: 26px;
+  left: 0;
+}
+
+.gudang-manajemen .logout-wrapper {
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  border-radius: 25.5px;
+}
+
+.gudang-manajemen .logout {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  top: 17px;
+  left: 17px;
+}
+
+.gudang-manajemen .iconly-bold-logout {
+  position: relative;
+  width: 16px;
+  height: 15px;
+  top: 2px;
+  left: 2px;
+  background-image: url(./img/logout.png);
+  background-size: 100% 100%;
+}
+
+.gudang-manajemen .text-wrapper-19 {
+  position: absolute;
+  top: 15px;
+  left: 63px;
+  font-family: "Poppins-Medium", Helvetica;
+  font-weight: 500;
+  color: #ffffff;
+  font-size: 13px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .vector-5 {
+  position: absolute;
+  width: 212px;
+  height: 1px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .LOGO-KINGLAND-tire {
+  position: absolute;
+  width: 215px;
+  height: 55px;
+  top: 21px;
+  left: 24px;
+  object-fit: cover;
+}
+
+.gudang-manajemen .group-39 {
+  position: absolute;
+  width: 245px;
+  height: 104px;
+  top: 128px;
+  left: 0;
+}
+
+.gudang-manajemen .overlap-10 {
+  position: absolute;
+  width: 247px;
+  height: 66px;
+  top: 38px;
+  left: 0;
+}
+
+.gudang-manajemen .rectangle-3 {
+  position: absolute;
+  width: 245px;
+  height: 66px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .manajemen-stok-wrapper {
+  position: absolute;
+  width: 191px;
+  height: 34px;
+  top: 19px;
+  left: 56px;
+}
+
+.gudang-manajemen .manajemen-stok {
+  position: absolute;
+  width: 189px;
+  top: 0;
+  left: 0;
+  font-family: "Poppins-Bold", Helvetica;
+  font-weight: 700;
+  color: #000000;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: 17.0px;
+}
+
+.gudang-manajemen .lsicon-management {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 23px;
+  left: 23px;
+}
+
+.gudang-manajemen .arrow-wrapper {
+  position: absolute;
+  width: 39px;
+  height: 39px;
+  top: 13px;
+  left: 194px;
+  background-color: #cb4a4a;
+  border-radius: 19.51px;
+}
+
+.gudang-manajemen .arrow {
+  position: absolute;
+  width: 16px;
+  height: 8px;
+  top: 16px;
+  left: 12px;
+}
+
+.gudang-manajemen .frame-15 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8.5px;
+  position: absolute;
+  top: 0;
+  left: 28px;
+}
+
+.gudang-manajemen .category {
+  position: relative;
+  width: 20.01px;
+  height: 20.01px;
+}
+
+.gudang-manajemen .iconly-bold-category {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  top: 2px;
+  left: 2px;
+  background-image: url(./img/category.png);
+  background-size: 100% 100%;
+}
+
+.gudang-manajemen .text-wrapper-20 {
+  position: relative;
+  width: fit-content;
+  margin-top: -1.00px;
+  font-family: "Poppins-SemiBold", Helvetica;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: 25.5px;
+  white-space: nowrap;
+}
+
+.gudang-manajemen .group-40 {
+  position: absolute;
+  width: 223px;
+  height: 149px;
+  top: 245px;
+  left: 22px;
+}
+
+.gudang-manajemen .overlap-11 {
+  position: relative;
+  height: 149px;
+}
+
+.gudang-manajemen .text-wrapper-21 {
+  position: absolute;
+  top: 123px;
+  left: 36px;
+  font-family: "Poppins-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .group-41 {
+  position: absolute;
+  width: 223px;
+  height: 147px;
+  top: 0;
+  left: 0;
+}
+
+.gudang-manajemen .text-wrapper-22 {
+  position: absolute;
+  top: 0;
+  left: 36px;
+  font-family: "Poppins-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .vector-6 {
+  position: absolute;
+  width: 16px;
+  height: 22px;
+  top: 2px;
+  left: 6px;
+}
+
+.gudang-manajemen .group-42 {
+  position: absolute;
+  width: 178px;
+  height: 26px;
+  top: 84px;
+  left: 36px;
+}
+
+.gudang-manajemen .text-wrapper-23 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: "Poppins-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .lsicon-order-done {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 84px;
+  left: 0;
+}
+
+.gudang-manajemen .frame-16 {
+  position: absolute;
+  width: 89px;
+  height: 26px;
+  top: 41px;
+  left: 6px;
+}
+
+.gudang-manajemen .text-wrapper-24 {
+  position: absolute;
+  top: -1px;
+  left: 30px;
+  font-family: "Poppins-Bold", Helvetica;
+  font-weight: 700;
+  color: #ffffff;
+  font-size: 17px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.gudang-manajemen .tabler-invoice {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 2px;
+  left: -5px;
+}
+
+.gudang-manajemen .group-43 {
+  position: absolute;
+  width: 16px;
+  height: 20px;
+  top: 2px;
+  left: 4px;
+}
+
+.gudang-manajemen .group-44 {
+  position: absolute;
+  width: 16px;
+  height: 22px;
+  top: 125px;
+  left: 6px;
+}
