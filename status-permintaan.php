@@ -102,7 +102,7 @@ if (!$result) {
                     <i class="fas fa-check-square text-base"></i>
                     <span>Pesanan Pelanggan</span>
                 </a>
-                <a class="flex items-center gap-3 font-bold text-white hover:text-white/90 transition-colors" href="buat-laporan.php">
+                <a class="flex items-center gap-3 font-bold text-white hover:text-white/90 transition-colors" href="buat-laporan-gudang.php">
                     <i class="fas fa-chart-bar text-base"></i>
                     <span>Laporan</span>
                 </a>

@@ -73,11 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Redirect with success parameter
-    header("Location: buat-laporan.php?success=1");
+    header("Location: buat-laporan-gudang.php.php?success=1");
     exit();
 } else {
     // Redirect if not a POST request
-    header("Location: buat-laporan.php");
+    header("Location: buat-laporan-gudang.php.php");
     exit();
 }
 ?>

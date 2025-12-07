@@ -153,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="bg-white rounded-xl p-6 max-w-7xl mx-auto flex flex-col gap-6">
                     <!-- Tabs -->
                     <div class="flex border-b border-gray-200 mb-6">
-                        <a href="buat-laporan.php" class="relative font-semibold text-[#9B1719] pb-2 mr-6 after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#9B1719]">
+                        <a href="buat-laporan-gudang.php.php" class="relative font-semibold text-[#9B1719] pb-2 mr-6 after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#9B1719]">
                             Buat Laporan
                         </a>
                         <a href="daftar-laporan-gudang.php" class="font-semibold text-gray-700 pb-2 hover:text-[#9B1719]">

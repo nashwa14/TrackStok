@@ -126,7 +126,7 @@ if (isset($_GET['delete']) && !empty($_GET['delete'])) {
                 <!-- Tabs -->
                 <div class="flex items-center justify-between border-b border-gray-200 pb-4 mb-6">
                     <div class="flex gap-8 text-sm font-semibold text-gray-900">
-                        <button class="text-gray-700 hover:text-black" onclick="window.location.href='buat-laporan-gudang.php'">Buat Laporan</button>
+                        <button class="text-gray-700 hover:text-black" onclick="window.location.href='buat-laporan-gudang.php-gudang.php'">Buat Laporan</button>
                         <button aria-current="true" class="text-[#9B1919] border-b-2 border-[#9B1919] pb-1">Daftar Laporan</button>
                     </div>
                     <div>
