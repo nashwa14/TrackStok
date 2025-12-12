@@ -1,9 +1,6 @@
 <?php
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+header('Content-Type: application/json');
 
-// Database connection for fetching barang data
 $hostname = "localhost";
 $username = "root";
 $password = "";
@@ -12,26 +9,53 @@ $database = "rbpl_kingland";
 $connect = new mysqli($hostname, $username, $password, $database);
 
 if ($connect->connect_error) {
-    die("Connection failed: " . $connect->connect_error);
+    echo json_encode(['error' => 'Connection failed']);
+    exit;
 }
 
-// Fetch latest no_laporan for display
-$no_laporan_query = "SELECT MAX(no_laporan) AS last_number FROM laporan_gudang";
-$no_laporan_result = $connect->query($no_laporan_query);
-$last_number = $no_laporan_result->fetch_assoc()['last_number'] ?? '#LAP000';
-if ($last_number === '#LAP000') {
-    $no_laporan_display = '#LAP001';
-} else {
-    $number = (int)substr($last_number, 4) + 1;
-    $no_laporan_display = '#LAP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+$id_permintaan = $_GET['id_permintaan'] ?? null;
+
+if (!$id_permintaan) {
+    echo json_encode(['error' => 'ID Permintaan tidak valid']);
+    exit;
 }
 
-// Fetch barang data for dropdowns
-$barang_query = "SELECT id_barang, nama_barang, (SELECT jumlah_stok FROM stok WHERE stok.id_barang = barang.id_barang LIMIT 1) AS stok_saat_ini FROM barang";
-$barang_result = $connect->query($barang_query);
+// Query untuk mengambil detail permintaan
+$query = "SELECT 
+    d.no_permintaan,
+    p.tanggal_permintaan as tanggal,
+    p.kode_barang_permintaan as kode_barang,
+    p.nama_barang_permintaan as nama_barang,
+    d.jumlah_permintaan
+FROM detail_permintaan_produksi d
+JOIN permintaan_produksi p ON d.id_permintaan = p.id_permintaan
+WHERE d.id_permintaan = ?
+ORDER BY d.id_detail ASC";
+
+$stmt = $connect->prepare($query);
+$stmt->bind_param("i", $id_permintaan);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$details = [];
+while ($row = $result->fetch_assoc()) {
+    $details[] = [
+        'no_permintaan' => $row['no_permintaan'] ?? 'N/A',
+        'tanggal' => date('d/m/Y', strtotime($row['tanggal'])),
+        'kode_barang' => $row['kode_barang'] ?? 'N/A',
+        'nama_barang' => $row['nama_barang'] ?? 'N/A',
+        'jumlah_permintaan' => $row['jumlah_permintaan'] ?? 0
+    ];
+}
+
+echo json_encode($details);
+
+$stmt->close();
+$connect->close();
 ?>
 
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
@@ -45,6 +69,7 @@ $barang_result = $connect->query($barang_query);
         }
     </style>
 </head>
+
 <body class="bg-white text-gray-900">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
@@ -370,5 +395,6 @@ $barang_result = $connect->query($barang_query);
         </main>
     </div>
 </body>
+
 </html>
 <?php $connect->close(); ?>
