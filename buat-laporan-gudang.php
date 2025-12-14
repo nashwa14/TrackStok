@@ -1,74 +1,113 @@
 <?php
-// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Database connection
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$database = "rbpl_kingland";
-
-$connect = new mysqli($hostname, $username, $password, $database);
-
+/* =======================
+   DATABASE CONNECTION
+======================= */
+$connect = new mysqli("localhost", "root", "", "rbpl_kingland");
 if ($connect->connect_error) {
     die("Connection failed: " . $connect->connect_error);
 }
 
-// Fetch latest no_laporan for display
-$no_laporan_query = "SELECT MAX(no_laporan) AS last_number FROM laporan_gudang";
-$no_laporan_result = $connect->query($no_laporan_query);
-$last_number = $no_laporan_result->fetch_assoc()['last_number'] ?? '#LAP000';
-if ($last_number === '#LAP000') {
-    $no_laporan_display = '#LAP001';
-} else {
-    $number = (int)substr($last_number, 4) + 1;
-    $no_laporan_display = '#LAP' . str_pad($number, 3, '0', STR_PAD_LEFT);
+/* =======================
+   GENERATE NO LAPORAN
+======================= */
+$q = $connect->query("SELECT MAX(no_laporan) AS last FROM laporan_gudang");
+$last = $q->fetch_assoc()['last'] ?? '#LAP000';
+$no_laporan_display = '#LAP' . str_pad(((int)substr($last, 4)) + 1, 3, '0', STR_PAD_LEFT);
+
+/* =======================
+   FETCH BARANG - Store as array untuk JavaScript
+======================= */
+$barang_list = [];
+$barang_result = $connect->query("
+    SELECT b.id_barang, b.nama_barang,
+           COALESCE(s.jumlah_stok, 0) AS stok_saat_ini
+    FROM barang b
+    LEFT JOIN stok s ON s.id_barang = b.id_barang
+");
+while ($row = $barang_result->fetch_assoc()) {
+    $barang_list[] = $row;
 }
 
-// Fetch barang data for dropdowns
-$barang_query = "SELECT id_barang, nama_barang, (SELECT jumlah_stok FROM stok WHERE stok.id_barang = barang.id_barang LIMIT 1) AS stok_saat_ini FROM barang";
-$barang_result = $connect->query($barang_query);
-
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+/* =======================
+   HANDLE SUBMIT
+======================= */
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $no_laporan = $_POST['no_laporan'] ?? '';
     $periode = $_POST['periode'] ?? '';
-    $tanggal_laporan = $_POST['tanggal-laporan'] ?? '';
+    $tanggal = $_POST['tanggal-laporan'] ?? '';
     $catatan = $_POST['catatan-tambahan'] ?? '';
-    $status_laporan = "Diterima"; // Default status
+    $status = 'Diterima';
 
-    // Validate required fields
-    if (empty($no_laporan) || empty($periode) || empty($tanggal_laporan)) {
-        die('Missing required fields: no_laporan, periode, or tanggal_laporan');
+    if (!$no_laporan || !$periode || !$tanggal) {
+        die("Data laporan belum lengkap");
     }
 
-    // Get the first item from the items array (simplified for single-table design)
-    $item = $_POST['items'][0] ?? [];
-    $id_barang = $item['id_barang'] ?? '';
-    $kode_barang = ''; // Not in form, can be derived from id_barang if needed
-    $nama_barang = $item['nama_barang'] ?? '';
-    $stok_awal = $item['stok_awal'] ?? 0;
-    $stok_masuk = $item['stok_masuk'] ?? 0;
-    $stok_keluar = $item['stok_keluar'] ?? 0;
-    $stok_akhir = $stok_awal + $stok_masuk - $stok_keluar;
+    $items = $_POST['items'] ?? [];
+    $validItems = [];
 
-    // Insert into laporan_gudang
-    $sql = "INSERT INTO laporan_gudang (no_laporan, periode, tanggal_laporan, catatan_tambahan, status_laporan, id_barang, nama_barang, stok_awal, stok_masuk, stok_keluar, stok_akhir) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    foreach ($items as $item) {
+        if (!empty($item['id_barang'])) {
+            $validItems[] = $item;
+        }
+    }
+
+    if (count($validItems) === 0) {
+        die("Minimal 1 barang harus dipilih");
+    }
+
+    $sql = "INSERT INTO laporan_gudang
+        (no_laporan, periode, tanggal_laporan, catatan_tambahan, status_laporan,
+         id_barang, nama_barang, stok_awal, stok_masuk, stok_keluar, stok_akhir)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     $stmt = $connect->prepare($sql);
-    if ($stmt === false) {
-        die('Prepare failed: ' . $connect->error);
+    if (!$stmt) {
+        die($connect->error);
     }
-    $stmt->bind_param("sssssiiiiii", $no_laporan, $periode, $tanggal_laporan, $catatan, $status_laporan, $id_barang, $nama_barang, $stok_awal, $stok_masuk, $stok_keluar, $stok_akhir);
-    $success = $stmt->execute();
-    if (!$success) {
-        die('Execute failed for laporan_gudang: ' . $stmt->error);
-    }
-    $stmt->close();
 
-    // Redirect with success parameter
-    header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
-    exit();
+    $connect->begin_transaction();
+
+    try {
+        foreach ($validItems as $item) {
+            $id_barang = $item['id_barang'];
+            $nama_barang = $item['nama_barang'] ?? '';
+
+            $stok_awal = (int)($item['stok_awal'] ?? 0);
+            $stok_masuk = (int)($item['stok_masuk'] ?? 0);
+            $stok_keluar = (int)($item['stok_keluar'] ?? 0);
+            $stok_akhir = $stok_awal + $stok_masuk - $stok_keluar;
+
+            $stmt->bind_param(
+                "sssssssiiii",
+                $no_laporan,
+                $periode,
+                $tanggal,
+                $catatan,
+                $status,
+                $id_barang,
+                $nama_barang,
+                $stok_awal,
+                $stok_masuk,
+                $stok_keluar,
+                $stok_akhir
+            );
+
+            if (!$stmt->execute()) {
+                throw new Exception($stmt->error);
+            }
+        }
+
+        $connect->commit();
+        header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
+        exit;
+
+    } catch (Exception $e) {
+        $connect->rollback();
+        die("Gagal menyimpan: " . $e->getMessage());
+    }
 }
 ?>
 
@@ -86,9 +125,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
+
 <body class="bg-white text-gray-900">
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
+        <!-- Sidebar (tetap sama) -->
         <aside class="bg-[#9B1919] w-64 flex flex-col justify-between sticky top-0 h-screen">
             <div>
                 <div class="px-6 py-8">
@@ -125,14 +165,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </nav>
             </div>
             <div class="px-6 py-6 border-t border-[#7A1A1E]">
-            <a href="logout.php" class="flex items-center gap-3 text-white text-sm font-normal">
-                <button class="flex items-center gap-3 text-white text-sm font-normal" type="button">
-                    <i class="fas fa-sign-out-alt text-lg"></i>
-                    Logout
-                </button>
-            </a>
-        </div>
+                <a href="logout.php" class="flex items-center gap-3 text-white text-sm font-normal">
+                    <button class="flex items-center gap-3 text-white text-sm font-normal" type="button">
+                        <i class="fas fa-sign-out-alt text-lg"></i>
+                        Logout
+                    </button>
+                </a>
+            </div>
         </aside>
+
         <!-- Main content -->
         <main class="flex-1 flex flex-col">
             <!-- Top bar -->
@@ -144,16 +185,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <i class="fas fa-chevron-down text-gray-600"></i>
                 </div>
             </header>
+
             <!-- Page title -->
             <div class="px-8 py-4 border-b border-gray-300">
                 <h1 class="font-bold text-lg text-black">Laporan Gudang PT. KingLand</h1>
             </div>
+
             <!-- Content area -->
             <section class="flex-1 bg-[#F2F2F2] p-8">
                 <div class="bg-white rounded-xl p-6 max-w-7xl mx-auto flex flex-col gap-6">
                     <!-- Tabs -->
                     <div class="flex border-b border-gray-200 mb-6">
-                        <a href="buat-laporan-gudang.php.php" class="relative font-semibold text-[#9B1719] pb-2 mr-6 after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#9B1719]">
+                        <a href="buat-laporan.php" class="relative font-semibold text-[#9B1719] pb-2 mr-6 after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[3px] after:bg-[#9B1719]">
                             Buat Laporan
                         </a>
                         <a href="daftar-laporan-gudang.php" class="font-semibold text-gray-700 pb-2 hover:text-[#9B1719]">
@@ -221,15 +264,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </tr>
                                 </thead>
                                 <tbody id="item-table-body">
-                                    <!-- Initial row with dropdown -->
-                                    <tr class="border-b border-gray-200">
+                                    <!-- Initial row -->
+                                    <tr class="border-b border-gray-200" data-row-index="0">
                                         <td class="py-3 px-4">
                                             <select class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm kode-barang" name="items[0][id_barang]">
                                                 <option value="">Pilih Kode Barang</option>
-                                                <?php $barang_result->data_seek(0);
-                                                while ($row = $barang_result->fetch_assoc()): ?>
-                                                    <option value="<?= htmlspecialchars($row['id_barang']) ?>" data-nama="<?= htmlspecialchars($row['nama_barang']) ?>" data-stok="<?= htmlspecialchars($row['stok_saat_ini'] ?? 0) ?>"><?= htmlspecialchars($row['id_barang']) ?></option>
-                                                <?php endwhile; ?>
+                                                <?php foreach ($barang_list as $barang): ?>
+                                                    <option value="<?= htmlspecialchars($barang['id_barang']) ?>" 
+                                                            data-nama="<?= htmlspecialchars($barang['nama_barang']) ?>" 
+                                                            data-stok="<?= htmlspecialchars($barang['stok_saat_ini']) ?>">
+                                                        <?= htmlspecialchars($barang['id_barang']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
                                             </select>
                                         </td>
                                         <td class="py-3 px-4">
@@ -239,50 +285,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-saat-ini" type="number" value="0" readonly />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-awal" type="number" name="items[0][stok_awal]" placeholder="Stok Awal" />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-awal" type="number" min="0" name="items[0][stok_awal]" placeholder="0" />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-masuk" type="number" name="items[0][stok_masuk]" placeholder="Stok Masuk" />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-masuk" type="number" min="0" name="items[0][stok_masuk]" placeholder="0" />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-keluar" type="number" name="items[0][stok_keluar]" placeholder="Stok Keluar" />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-keluar" type="number" min="0" name="items[0][stok_keluar]" placeholder="0" />
                                         </td>
                                         <td class="py-3 px-4">
                                             <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-akhir bg-gray-100 cursor-not-allowed" type="number" name="items[0][stok_akhir]" readonly />
                                         </td>
                                         <td class="py-3 px-4 text-center">
-                                            <button type="button" class="text-red-600 hover:text-red-700 text-lg delete-row-btn">
+                                            <button type="button" class="text-red-600 hover:text-red-700 text-lg delete-row-btn" title="Hapus baris ini">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            
+                            <!-- Tombol Tambah Item -->
+                            <button type="button" id="tambah-item" class="bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md px-6 py-3 flex items-center gap-2 mt-4 transition-colors duration-200 w-full md:w-auto justify-center">
+                                <i class="fas fa-plus"></i>
+                                Tambah Item
+                            </button>
                         </div>
 
-                        <!-- Script for adding and deleting rows with synchronization and stock calculation -->
+                        <!-- JavaScript -->
                         <script>
                             document.addEventListener("DOMContentLoaded", function() {
-                                const tambahBtn = document.createElement("button");
-                                tambahBtn.id = "tambah-item";
-                                tambahBtn.className = "bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md px-4 py-2 flex items-center gap-2 transition-colors duration-200 mt-4";
-                                tambahBtn.innerHTML = '<i class="fas fa-plus"></i> Tambah Item';
-                                document.querySelector('.overflow-x-auto').appendChild(tambahBtn);
+                                let rowIndex = 1; // Mulai dari 1 karena row 0 sudah ada
+                                
+                                // Data barang dari PHP
+                                const barangList = <?= json_encode($barang_list) ?>;
 
                                 const tableBody = document.getElementById("item-table-body");
+                                const tambahBtn = document.getElementById("tambah-item");
+
+                                // Function to create option HTML
+                                function createBarangOptions() {
+                                    return barangList.map(barang => 
+                                        `<option value="${barang.id_barang}" 
+                                                 data-nama="${barang.nama_barang}" 
+                                                 data-stok="${barang.stok_saat_ini}">
+                                            ${barang.id_barang}
+                                        </option>`
+                                    ).join('');
+                                }
 
                                 // Function to sync nama barang, stok saat ini, and calculate stok akhir
                                 function syncDetails(row) {
                                     const kodeSelect = row.querySelector('.kode-barang');
                                     const namaInput = row.querySelector('.nama-barang');
                                     const stokSaatIniInput = row.querySelector('.stok-saat-ini');
-                                    const stokAwalInput = row.querySelector('.stok-awal');
-                                    const stokMasukInput = row.querySelector('.stok-masuk');
-                                    const stokKeluarInput = row.querySelector('.stok-keluar');
-                                    const stokAkhirInput = row.querySelector('.stok-akhir');
                                     const selectedOption = kodeSelect.options[kodeSelect.selectedIndex];
-                                    namaInput.value = selectedOption ? selectedOption.getAttribute('data-nama') || '' : '';
-                                    stokSaatIniInput.value = selectedOption ? parseInt(selectedOption.getAttribute('data-stok') || 0) : 0;
+                                    
+                                    namaInput.value = selectedOption.dataset.nama || '';
+                                    stokSaatIniInput.value = selectedOption.dataset.stok || 0;
                                     updateStokAkhir(row);
                                 }
 
@@ -296,90 +356,107 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     const stokAwal = parseInt(stokAwalInput.value) || 0;
                                     const stokMasuk = parseInt(stokMasukInput.value) || 0;
                                     const stokKeluar = parseInt(stokKeluarInput.value) || 0;
-                                    const stokAkhir = stokAwal + stokMasuk - stokKeluar;
-                                    stokAkhirInput.value = stokAkhir >= 0 ? stokAkhir : 0;
+                                    const stokAkhir = Math.max(0, stokAwal + stokMasuk - stokKeluar);
+                                    
+                                    stokAkhirInput.value = stokAkhir;
                                 }
 
                                 // Add new row
                                 tambahBtn.addEventListener("click", function() {
-                                    const rowCount = tableBody.getElementsByTagName("tr").length;
                                     const newRow = document.createElement("tr");
                                     newRow.className = "border-b border-gray-200";
+                                    newRow.dataset.rowIndex = rowIndex;
 
                                     newRow.innerHTML = `
                                         <td class="py-3 px-4">
-                                            <select class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm kode-barang" name="items[${rowCount}][id_barang]">
+                                            <select class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm kode-barang" name="items[${rowIndex}][id_barang]">
                                                 <option value="">Pilih Kode Barang</option>
-                                                <?php $barang_result->data_seek(0);
-                                                while ($row = $barang_result->fetch_assoc()): ?>
-                                                    <option value="<?= htmlspecialchars($row['id_barang']) ?>" data-nama="<?= htmlspecialchars($row['nama_barang']) ?>" data-stok="<?= htmlspecialchars($row['stok_saat_ini'] ?? 0) ?>"><?= htmlspecialchars($row['id_barang']) ?></option>
-                                                <?php endwhile; ?>
+                                                ${createBarangOptions()}
                                             </select>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm nama-barang" type="text" name="items[${rowCount}][nama_barang]" readonly />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm nama-barang" type="text" name="items[${rowIndex}][nama_barang]" readonly />
                                         </td>
                                         <td class="py-3 px-4">
                                             <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-saat-ini" type="number" value="0" readonly />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-awal" type="number" name="items[${rowCount}][stok_awal]" placeholder="Stok Awal" />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-awal" type="number" min="0" name="items[${rowIndex}][stok_awal]" placeholder="0" />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-masuk" type="number" name="items[${rowCount}][stok_masuk]" placeholder="Stok Masuk" />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-masuk" type="number" min="0" name="items[${rowIndex}][stok_masuk]" placeholder="0" />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-keluar" type="number" name="items[${rowCount}][stok_keluar]" placeholder="Stok Keluar" />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-keluar" type="number" min="0" name="items[${rowIndex}][stok_keluar]" placeholder="0" />
                                         </td>
                                         <td class="py-3 px-4">
-                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-akhir bg-gray-100 cursor-not-allowed" type="number" name="items[${rowCount}][stok_akhir]" readonly />
+                                            <input class="border border-gray-300 rounded-md px-3 py-2 w-full text-sm stok-akhir bg-gray-100 cursor-not-allowed" type="number" name="items[${rowIndex}][stok_akhir]" readonly />
                                         </td>
                                         <td class="py-3 px-4 text-center">
-                                            <button type="button" class="text-red-600 hover:text-red-700 text-lg delete-row-btn">
+                                            <button type="button" class="text-red-600 hover:text-red-700 text-lg delete-row-btn" title="Hapus baris ini">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
-                                        </td>`;
+                                        </td>
+                                    `;
 
                                     tableBody.appendChild(newRow);
-
+                                    
                                     // Add event listeners for the new row
-                                    const kodeSelect = newRow.querySelector('.kode-barang');
-                                    kodeSelect.addEventListener('change', () => syncDetails(newRow));
-                                    const inputs = newRow.querySelectorAll('.stok-awal, .stok-masuk, .stok-keluar');
-                                    inputs.forEach(input => {
+                                    const newKodeSelect = newRow.querySelector('.kode-barang');
+                                    newKodeSelect.addEventListener('change', () => syncDetails(newRow));
+                                    
+                                    const newInputs = newRow.querySelectorAll('.stok-awal, .stok-masuk, .stok-keluar');
+                                    newInputs.forEach(input => {
                                         input.addEventListener('input', () => updateStokAkhir(newRow));
                                     });
 
                                     // Add delete functionality
                                     newRow.querySelector(".delete-row-btn").addEventListener("click", function() {
-                                        tableBody.removeChild(newRow);
+                                        if (tableBody.getElementsByTagName("tr").length > 1) {
+                                            tableBody.removeChild(newRow);
+                                        } else {
+                                            alert("Minimal harus ada 1 item!");
+                                        }
                                     });
+
+                                    rowIndex++;
                                 });
 
                                 // Add event listeners to existing rows
                                 document.querySelectorAll(".kode-barang").forEach(kodeSelect => {
-                                    kodeSelect.addEventListener('change', () => syncDetails(kodeSelect.closest('tr')));
+                                    kodeSelect.addEventListener('change', function() {
+                                        syncDetails(this.closest('tr'));
+                                    });
                                 });
 
                                 document.querySelectorAll(".stok-awal, .stok-masuk, .stok-keluar").forEach(input => {
-                                    input.addEventListener('input', () => updateStokAkhir(input.closest('tr')));
+                                    input.addEventListener('input', function() {
+                                        updateStokAkhir(this.closest('tr'));
+                                    });
                                 });
 
                                 document.querySelectorAll(".delete-row-btn").forEach(btn => {
                                     btn.addEventListener("click", function() {
                                         const row = this.closest("tr");
-                                        tableBody.removeChild(row);
+                                        const rowCount = tableBody.getElementsByTagName("tr").length;
+                                        if (rowCount > 1) {
+                                            tableBody.removeChild(row);
+                                        } else {
+                                            alert("Minimal harus ada 1 item!");
+                                        }
                                     });
                                 });
 
-                                // Search filter
+                                // Search filter (hanya untuk row yang ada)
                                 const searchInput = document.getElementById('search');
-                                searchInput.addEventListener('input', () => {
-                                    const filter = searchInput.value.toLowerCase();
-                                    const rows = document.querySelectorAll('#item-table-body tr');
+                                searchInput.addEventListener('input', function() {
+                                    const filter = this.value.toLowerCase();
+                                    const rows = tableBody.querySelectorAll('tr');
                                     rows.forEach(row => {
-                                        const kode = row.querySelector('td:nth-child(1) select').value.toLowerCase();
-                                        const nama = row.querySelector('td:nth-child(2) input').value.toLowerCase();
+                                        const kodeSelect = row.querySelector('.kode-barang');
+                                        const namaInput = row.querySelector('.nama-barang');
+                                        const kode = kodeSelect.value.toLowerCase();
+                                        const nama = namaInput.value.toLowerCase();
                                         if (kode.includes(filter) || nama.includes(filter)) {
                                             row.style.display = '';
                                         } else {
@@ -407,7 +484,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
 
                         <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-                            <div class="text-green-600 text-sm mt-4">Laporan berhasil disimpan!</div>
+                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md">
+                                Laporan berhasil disimpan!
+                            </div>
                         <?php endif; ?>
                     </form>
                 </div>

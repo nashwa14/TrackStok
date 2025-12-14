@@ -10,36 +10,37 @@ if ($connect->connect_error) {
     die('Maaf koneksi gagal:' . $connect->connect_error);
 }
 
-// Pagination settings
+// Pagination
 $per_page = 10;
-$page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
 $offset = ($page - 1) * $per_page;
 
-// Search functionality
-$search = isset($_GET['search']) ? $connect->real_escape_string($_GET['search']) : '';
+// Search
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$search_param = "%{$search}%";
 
-// Fetch total rows with search filter
-$query_total = "SELECT COUNT(DISTINCT dp.no_bstb) as total 
-                FROM detail_permintaan_produksi dp 
-                JOIN permintaan_produksi p ON dp.id_permintaan = p.id_permintaan 
+// Total rows
+$query_total = "SELECT COUNT(DISTINCT dp.no_bstb) AS total
+                FROM detail_permintaan_produksi dp
+                JOIN permintaan_produksi p ON dp.id_permintaan = p.id_permintaan
                 WHERE dp.no_bstb LIKE ? OR p.id_permintaan LIKE ?";
 $stmt_total = $connect->prepare($query_total);
-$search_param = "%$search%";
 $stmt_total->bind_param("ss", $search_param, $search_param);
 $stmt_total->execute();
 $total_rows_result = $stmt_total->get_result();
-$total_rows = $total_rows_result ? $total_rows_result->fetch_assoc()['total'] : 0;
-$total_pages = ceil($total_rows / $per_page);
+$total_rows = $total_rows_result ? (int)$total_rows_result->fetch_assoc()['total'] : 0;
+$total_pages = max(1, (int)ceil($total_rows / $per_page));
 
-// Fetch data with pagination and search
-$query = "SELECT 
-    dp.no_bstb, 
-    p.tanggal_permintaan, 
-    p.id_permintaan 
-FROM detail_permintaan_produksi dp 
-JOIN permintaan_produksi p ON dp.id_permintaan = p.id_permintaan 
-WHERE dp.no_bstb LIKE ? OR p.id_permintaan LIKE ? 
-LIMIT ?, ?";
+// Data utama
+$query = "SELECT DISTINCT dp.no_bstb,
+                 p.tanggal_permintaan,
+                 p.id_permintaan
+          FROM detail_permintaan_produksi dp
+          JOIN permintaan_produksi p ON dp.id_permintaan = p.id_permintaan
+          WHERE dp.no_bstb LIKE ? OR p.id_permintaan LIKE ?
+          ORDER BY p.tanggal_permintaan DESC
+          LIMIT ?, ?";
 $stmt = $connect->prepare($query);
 $stmt->bind_param("ssii", $search_param, $search_param, $offset, $per_page);
 $stmt->execute();
@@ -184,7 +185,7 @@ if (!$result) {
                             .then(response => response.json())
                             .then(data => {
                                 const tbody = document.getElementById('modal-table-content');
-                                tbody.innerHTML = '';
+                                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4">No details found</td></tr>';
                                 if (data.length > 0) {
                                     data.forEach(item => {
                                         const row = document.createElement('tr');
